@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.10)
 
 project (curves)
-add_library(curves SHARED Circle.cpp Ellipse.cpp Helix.cpp)
+add_library(curves SHARED Curve.cpp Circle.cpp Ellipse.cpp Helix.cpp)
 target_include_directories(curves PUBLIC .)
 set_target_properties(curves PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 

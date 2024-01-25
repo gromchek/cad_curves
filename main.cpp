@@ -8,6 +8,7 @@
 #include "curves/Circle.h"
 #include "curves/Ellipse.h"
 #include "curves/Helix.h"
+#include "curves/Curve.h"
 
 #include <mutex>
 #include <thread>
@@ -28,42 +29,7 @@ void sumUp( double &sum, const std::vector<std::shared_ptr<Circle>> &circles, un
 int main()
 {
 	const int SHAPES_COUNT = 1024;
-	std::vector<std::shared_ptr<Curve>> curves;
-	curves.reserve( SHAPES_COUNT );
-
-
-	std::random_device rd;
-	std::mt19937 gen( rd() );
-	std::uniform_real_distribution<float> dist( 5.0f, 50.0f );
-	std::uniform_int_distribution<int> type( 0, 2 );
-
-	for( int i = 0; i < SHAPES_COUNT; ++i )
-	{
-		switch( type( gen ) )
-		{
-		case 0:
-		{
-			auto r = dist( gen );
-			auto p = std::make_shared<Circle>( r );
-			curves.push_back( p );
-		}
-		break;
-		case 1:
-		{
-			auto rx = dist( gen );
-			auto ry = dist( gen );
-			curves.push_back( std::make_shared<Ellipse>( rx, ry ) );
-		}
-		break;
-		case 2:
-		{
-			auto r = dist( gen );
-			auto s = dist( gen );
-			curves.push_back( std::make_shared<Helix>( r, s ) );
-		}
-		break;
-		}
-	}
+	std::vector<std::shared_ptr<Curve>> curves = MakeCurvesContainer(SHAPES_COUNT);
 
 	const auto pi4 = M_PI / 4.0f;
 	for( const auto &curve : curves )
